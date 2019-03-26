@@ -1,5 +1,7 @@
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import WebpackNotifierPlugin from 'webpack-notifier';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -11,20 +13,20 @@ const plugins = [
   })
 ];
 
-/* if(isProduction) {
+if(isProduction) {
   plugins.push(
     new ExtractTextPlugin({
       allChunks: true,
       filename: './css/[name].css'
     })
+  );
+} else {
+  plugins.push(
+    new BundleAnalyzerPlugin(),
+    new WebpackNotifierPlugin({
+      title: 'CodeJobs'
+    })
   )
-} */
-
-plugins.push(
-  new ExtractTextPlugin({
-    allChunks: true,
-    filename: './css/[name].css'
-  })
-)
+}
 
 export default plugins;
