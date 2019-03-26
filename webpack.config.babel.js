@@ -25,12 +25,15 @@ export default {
 }; */
 
 // Configuration
-import { devtool, module, optimization, plugins, resolve } from './webpack/configuration'
+import { devtool, module, optimization, plugins, resolve, entry, mode, output } from './webpack/configuration'
 
 export default {
   devtool,
   module,
   optimization,
   plugins,
-  resolve
+  resolve, 
+  entry, 
+  mode, 
+  output
 };

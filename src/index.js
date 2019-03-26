@@ -1,14 +1,39 @@
 // Dependencies
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { AppContainer } from 'react-hot-loader';
+
+// Redux Store
+import configureStore from './shared/redux/configureStore';
 
 // Components
-import App from './components/App';
+import App from './client/App';
 
-render(<App />, document.querySelector('#root'));
+// Configuring Redux Store
+const store = configureStore(window.initialState)
 
-/* import { numbers } from './numbers';
+// Root element
+const rootElement = document.querySelector('#root');
 
-numbers.forEach(number => console.log(number));
+// App Wrapper
+const renderApp = Component => {
+  render(
+    <AppContainer>
+      <Provider store={store}>
+        <Component />
+      </Provider>
+    </AppContainer>,
+    rootElement
+  );
+};
 
-console.log('Index file...'); */
+// Rendering app
+renderApp(App);
+
+// Hot Module Replacement
+if (module.hot) {
+  module.hot.accept('./client/App', () => {
+    renderApp(require('./client/App').default);
+  });
+}
